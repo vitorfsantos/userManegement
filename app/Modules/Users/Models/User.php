@@ -8,6 +8,7 @@ use App\Modules\Users\Models\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
   /** @use HasFactory<\Database\Factories\UserFactory> */
-  use HasFactory, Notifiable, HasApiTokens, HasUuids;
+  use HasFactory, Notifiable, HasApiTokens, HasUuids, SoftDeletes;
 
 
   /**
@@ -41,11 +42,11 @@ class User extends Authenticatable
     ];
   }
   protected static function newFactory()
-    {
-        return UserFactory::new();
-    }
+  {
+    return UserFactory::new();
+  }
   public function level(): BelongsTo
   {
-    return $this->belongsTo(UserLevel::class);
+    return $this->belongsTo(UserLevel::class, 'user_level_id' );
   }
 }

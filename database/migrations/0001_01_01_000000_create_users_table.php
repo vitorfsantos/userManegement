@@ -26,6 +26,7 @@ return new class extends Migration
       $table->string('password');
       $table->rememberToken();
       $table->timestamps();
+      $table->softDeletes();
 
       $table->foreign('user_level_id')->references('id')->on('user_levels');
     });
